@@ -1,0 +1,3 @@
+[submodule "travel-booking-service"]
+	path = travel-booking-service
+	url = https://github.com/JonathanGhaly/travel-booking-service.git
