@@ -1,3 +1,18 @@
 [submodule "travel-booking-service"]
 	path = travel-booking-service
 	url = https://github.com/JonathanGhaly/travel-booking-service.git
+[submodule "travel-poi-service"]
+	path = travel-poi-service
+	url = https://github.com/JonathanGhaly/travel-poi-service
+[submodule "travel-users-service"]
+	path = travel-users-service
+	url = https://github.com/JonathanGhaly/travel-users-service
+[submodule "travel-auth-service"]
+	path = travel-auth-service
+	url = https://github.com/JonathanGhaly/travel-auth-service
+[submodule "travel-notification-service"]
+	path = travel-notification-service
+	url = https://github.com/JonathanGhaly/travel-notification-service
+[submodule "travel-itinerary-service"]
+	path = travel-itinerary-service
+	url = https://github.com/JonathanGhaly/travel-itinerary-service
