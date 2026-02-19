@@ -1,1 +1,8 @@
 rootProject.name = 'travel-platform'
+
+include 'travel-auth-service'
+include 'travel-itinerary-service'
+include 'travel-booking-service'
+include 'travel-poi-service'
+include 'travel-notification-service'
+include 'travel-users-service'
