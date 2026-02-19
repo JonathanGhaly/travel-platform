@@ -72,6 +72,7 @@ All services are fully independent and communicate over REST APIs. They share co
 - Spring Boot Test – Integration tests with Spring context.
 
 ## Multi-Module Project Structure
+```
 travel-platform/
 ├── travel-auth-service/
 ├── travel-users-service/
@@ -83,7 +84,7 @@ travel-platform/
 ├── build.gradle          # Root build file
 ├── settings.gradle       # Module inclusion
 └── docker-compose.yml    # Centralized deployment with Redis, Prometheus, Grafana
-
+```
 
 Each microservice has its own build.gradle, application.yml, and Docker configuration for complete independence.
 
