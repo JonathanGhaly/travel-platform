@@ -1,35 +1,103 @@
 version: '3.9'
 
 services:
+
+  # =========================
+  # DATABASES
+  # =========================
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: travel-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    restart: unless-stopped
+
+  # =========================
+  # REDIS (Shared)
+  # =========================
+
   redis:
     image: redis:7-alpine
-    container_name: poi-redis
+    container_name: travel-redis
     ports:
       - "6379:6379"
-    command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
     restart: unless-stopped
+
+  # =========================
+  # POI SERVICE
+  # =========================
+
+  poi-service:
+    build:
+      context: .
+      dockerfile: travel-poi-service/Dockerfile
+    container_name: poi-service
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
+
+  # =========================
+  # BOOKING SERVICE
+  # =========================
+
+  booking-service:
+    build:
+      context: .
+      dockerfile: travel-booking-service/Dockerfile
+    container_name: booking-service
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8083:8083"
+    restart: unless-stopped
+
+  # =========================
+  # PROMETHEUS
+  # =========================
+
   prometheus:
     image: prom/prometheus:latest
-    container_name: poi-prometheus
+    container_name: travel-prometheus
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
     depends_on:
       - poi-service
+      - booking-service
+
+  # =========================
+  # GRAFANA
+  # =========================
 
   grafana:
     image: grafana/grafana:latest
-    container_name: poi-grafana
+    container_name: travel-grafana
     ports:
       - "3000:3000"
     depends_on:
       - prometheus
     volumes:
       - grafana_data:/var/lib/grafana
-      
+
 volumes:
+  postgres_data:
   redis_data:
   grafana_data:
