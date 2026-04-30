@@ -1,3 +1,4 @@
+CREATE DATABASE keycloak;
 CREATE DATABASE travel_poi;
 CREATE DATABASE travel_booking;
 CREATE DATABASE travel_users;
